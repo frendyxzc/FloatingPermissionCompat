@@ -6,14 +6,13 @@ package com.android.floatwindowpermission;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -67,11 +66,9 @@ public class FloatView extends FrameLayout {
 
     private void initView() {
         windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View floatView = inflater.inflate(R.layout.float_window_layout, null);
-
-        addView(floatView);
-
+        ImageView image = new ImageView(getContext());
+        image.setImageResource(R.mipmap.ic_launcher);
+        addView(image);
     }
 
     public void setParams(WindowManager.LayoutParams params) {
@@ -80,6 +77,10 @@ public class FloatView extends FrameLayout {
 
     public void setIsShowing(boolean isShowing) {
         this.isShowing = isShowing;
+    }
+
+    public boolean isShowing(){
+        return isShowing;
     }
 
     @Override
