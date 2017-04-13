@@ -24,13 +24,13 @@ compile 'com.linchaolong.android:floatingpermissioncompat:${latest.version}'
 
 使用说明（Example）:
 ```
-1. 检测是否已授权悬浮窗权限（check floating window permission）
+// 检测是否已授权悬浮窗权限（check floating window permission）
 FloatingPermissionCompat.get().check(context)
 
-2. 判断是否已经兼容当前 ROM（check if supported current ROM）
+// 判断是否已经兼容当前 ROM（check if supported current ROM）
 FloatingPermissionCompat.get().isSupported()
 
-3. 打开授权界面（show the floating window permission activity） 
+// 打开授权界面（show the floating window permission activity） 
 FloatingPermissionCompat.get().apply(context);
 ```
 
