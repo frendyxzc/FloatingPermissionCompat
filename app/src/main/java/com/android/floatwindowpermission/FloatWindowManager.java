@@ -8,6 +8,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
 
 /**
@@ -36,6 +37,15 @@ public class FloatWindowManager {
       }
     }
     return instance;
+  }
+
+  /**
+   * 是否已经显示悬浮窗
+   *
+   * @return
+   */
+  public boolean isShowing(){
+    return floatView != null && floatView.getVisibility() == View.VISIBLE;
   }
 
   /**

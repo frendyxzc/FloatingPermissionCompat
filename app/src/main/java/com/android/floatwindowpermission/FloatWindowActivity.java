@@ -19,18 +19,16 @@ import com.linchaolong.android.floatingpermissioncompat.FloatingPermissionCompat
 
 public class FloatWindowActivity extends Activity {
 
-  FloatingPermissionCompat floatingPermissionCompat;
   Activity context;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     context = this;
-    floatingPermissionCompat = FloatingPermissionCompat.get();
     findViewById(R.id.btn_show_or_apply).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         // 检查是否已经授权
-        if (floatingPermissionCompat.check(context)) {
+        if (FloatingPermissionCompat.get().check(context)) {
           FloatWindowManager.get().show(context);
         } else {
           // 授权提示

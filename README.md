@@ -12,6 +12,30 @@ from now on，the models below android M that have been adapted are :
 
 more details about the models that have been adapted(thanks [ruanqin0706](https://github.com/ruanqin0706) for help):</br>
 
+# Usage
+
+`${latest.version}` 是 [![Download](https://api.bintray.com/packages/linchaolong/maven/floatingpermissioncompat/images/download.svg) ](https://bintray.com/linchaolong/maven/floatingpermissioncompat/_latestVersion)
+
+添加依赖到你的 `build.gradle` 文件（If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file）:
+ 
+```
+compile 'com.linchaolong.android:floatingpermissioncompat:${latest.version}'
+```
+
+使用说明（Example）:
+```
+1. 检测是否已授权悬浮窗权限（check floating window permission）
+FloatingPermissionCompat.get().check(context)
+
+2. 判断是否已经兼容当前 ROM（check if supported current ROM）
+FloatingPermissionCompat.get().isSupported()
+
+3. 打开授权界面（show the floating window permission activity） 
+FloatingPermissionCompat.get().apply(context);
+```
+
+更多细节请查看 app 模块的示例代码（more detail see the app module code）。
+
 ## 6.0/6.0+
 
 most models are OK with this way of adaption except meizu:

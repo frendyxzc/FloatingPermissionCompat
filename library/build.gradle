@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
   compileSdkVersion 25
@@ -18,6 +19,39 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+}
+
+publish {
+  // 读取 local.properties 中配置
+  Properties properties = new Properties()
+  File localPropertiesFile = rootProject.file("local.properties");
+  if (localPropertiesFile.exists()) {
+    properties.load(localPropertiesFile.newDataInputStream())
+  }
+  // 用户名
+  bintrayUser = properties.getProperty("bintrayUser")
+  if(bintrayUser == null && project.hasProperty("bintrayUser")){
+    bintrayUser = project.property("bintrayUser")
+  }
+  // apkKey
+  bintrayKey = properties.getProperty("bintrayKey")
+  if(bintrayKey == null && project.hasProperty("bintrayKey")){
+    bintrayKey = project.property("bintrayKey")
+  }
+  // 仓库名称，默认maven
+  repoName = 'maven'
+  // 组织名称
+  userOrg = 'linchaolong'
+  //compile 'groupId:artifactId:publishVersion'
+  groupId = 'com.linchaolong.android'
+  artifactId = 'floatingpermissioncompat'
+  publishVersion = '1.0'
+  // 项目描述
+  desc = 'Android 下悬浮窗权限兼容库（android floating permission compatibility library）'
+  // 项目地址
+  website = 'https://github.com/linchaolong/FloatingPermissionCompat'
+  // 如果设置为true，它将运行所有内容，但不会将包上传到bintray。如果是false，那么它会正常上传。
+  dryRun = false
 }
 
 dependencies {
