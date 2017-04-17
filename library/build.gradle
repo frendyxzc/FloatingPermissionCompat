@@ -47,7 +47,7 @@ publish {
   artifactId = 'floatingpermissioncompat'
   publishVersion = '1.0'
   // 项目描述
-  desc = 'Android 下悬浮窗权限兼容库（android floating permission compatibility library）'
+  desc = 'Android下的悬浮窗权限兼容库（android floating permission compatibility library）'
   // 项目地址
   website = 'https://github.com/linchaolong/FloatingPermissionCompat'
   // 如果设置为true，它将运行所有内容，但不会将包上传到bintray。如果是false，那么它会正常上传。
