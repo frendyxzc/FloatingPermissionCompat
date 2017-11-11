@@ -14,15 +14,6 @@ more details about the models that have been adapted(thanks [ruanqin0706](https:
 
 # Usage
 
-`${latest.version}` 是 [![Download](https://api.bintray.com/packages/linchaolong/maven/floatingpermissioncompat/images/download.svg) ](https://bintray.com/linchaolong/maven/floatingpermissioncompat/_latestVersion)
-
-添加依赖到你的 `build.gradle` 文件（If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file）:
- 
-```
-compile 'com.linchaolong.android:floatingpermissioncompat:${latest.version}'
-```
-
-使用说明（Example）:
 ```
 // 检测是否已授权悬浮窗权限（check floating window permission）
 FloatingPermissionCompat.get().check(context)
