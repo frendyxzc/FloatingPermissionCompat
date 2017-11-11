@@ -91,6 +91,9 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
         }
     }
 
+    /**
+     * 铺开悬浮窗
+     */
     private void rolloutFloatView() {
         if(mFloatViewWeb == null) return;
 
@@ -104,6 +107,9 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
         mFloatViewWeb.setLayoutParams(linearParams);
     }
 
+    /**
+     * 卷起悬浮窗
+     */
     private void rollupFloatView() {
         if(mFloatViewWeb == null) return;
 
