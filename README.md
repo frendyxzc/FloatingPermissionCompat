@@ -1,3 +1,9 @@
+# KFloatView
+
+This is a Custom Floatview based on FloatingPermissionCompat:
+
+![floatview](http://upload-images.jianshu.io/upload_images/6306778-d5208b5fe7a2bede.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/320)
+
 # FloatingPermissionCompat
 
 this repository is aimed to adapt android float window permission in most of phone models and how to request it at runtime </br>
