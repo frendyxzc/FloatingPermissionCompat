@@ -53,6 +53,7 @@ class FloatView(context: Context) : FrameLayout(context) {
     private var mParams: WindowManager.LayoutParams? = null
 
     private var mListener: IFloatView? = null
+    private var enableAnchorToSide = false
 
     init {
 
@@ -80,6 +81,10 @@ class FloatView(context: Context) : FrameLayout(context) {
         return isShowing
     }
 
+    fun setEnableAnchorToSide(enable: Boolean) {
+        this.enableAnchorToSide = enable
+    }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (isAnchoring) {
             return true
@@ -99,12 +104,14 @@ class FloatView(context: Context) : FrameLayout(context) {
                 // 手指移动的时候更新小悬浮窗的位置
                 updateViewPosition()
             }
-            MotionEvent.ACTION_UP -> if (Math.abs(xDownInScreen - xInScreen) <= ViewConfiguration.get(context).scaledTouchSlop && Math.abs(yDownInScreen - yInScreen) <= ViewConfiguration.get(context).scaledTouchSlop) {
-                // 点击效果
-                mListener?.onFloatViewClick(this)
-            } else {
-                //吸附效果
-                anchorToSide()
+            MotionEvent.ACTION_UP -> {
+                if (Math.abs(xDownInScreen - xInScreen) <= ViewConfiguration.get(context).scaledTouchSlop && Math.abs(yDownInScreen - yInScreen) <= ViewConfiguration.get(context).scaledTouchSlop) {
+                    // 点击效果
+                    mListener?.onFloatViewClick(this)
+                } else {
+                    //吸附效果
+                    if(enableAnchorToSide) anchorToSide()
+                }
             }
             else -> {
             }

@@ -2,7 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.1.51'
-    ext.support_version = '25.3.1'
+    ext.support_version = '26.0.2'
 
     repositories {
         jcenter()
@@ -21,6 +21,7 @@ allprojects {
     repositories {
         jcenter()
         google()
+        maven { url 'https://jitpack.io' }
     }
     // 中文注释
     tasks.withType(Javadoc) {

@@ -7,9 +7,10 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.linchaolong.android.floatingpermissioncompat.FloatingPermissionCompat;
 
@@ -17,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import vip.frendy.kfloat.FloatView;
 import vip.frendy.kfloat.interfaces.IFloatView;
+import vip.frendy.kwebviewext.KWebViewExt;
 
 /**
  * Description:
@@ -28,6 +30,9 @@ import vip.frendy.kfloat.interfaces.IFloatView;
 public class FloatWindowActivity extends Activity implements View.OnClickListener, IFloatView {
 
     Activity context;
+    FloatView mFloatView;
+    Button mFloatViewClose;
+    KWebViewExt mFloatViewWeb;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,22 +64,52 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
             }
         } else if(v.getId() == R.id.btn_dismiss) {
             FloatWindowManager.getInstance().dismiss();
+        } else if(v.getId() == R.id.close && mFloatViewClose != null && mFloatViewClose.getVisibility() == View.VISIBLE) {
+            mFloatViewClose.setVisibility(View.GONE);
+            rollupFloatView();
         }
     }
 
     @Override
     public void onFloatViewInit(@NotNull FloatView parent) {
-        parent.findViewById(R.id.button).setVisibility(View.GONE);
+        mFloatView = parent;
+        mFloatViewClose = parent.findViewById(R.id.close);
+        mFloatViewWeb = parent.findViewById(R.id.webview);
 
-        WebView webView = (WebView) parent.findViewById(R.id.webview);
+        mFloatViewClose.setVisibility(View.GONE);
+        mFloatViewClose.setOnClickListener(this);
+
+        mFloatViewWeb.loadUrl("https://www.baidu.com/");
+        mFloatViewWeb.setProceedTouchEvent(true);
     }
 
     @Override
     public void onFloatViewClick(@NotNull FloatView parent) {
-        if(parent.findViewById(R.id.button).getVisibility() == View.GONE) {
-            parent.findViewById(R.id.button).setVisibility(View.VISIBLE);
-        } else {
-            parent.findViewById(R.id.button).setVisibility(View.GONE);
+        if(mFloatViewClose.getVisibility() == View.GONE) {
+            mFloatViewClose.setVisibility(View.VISIBLE);
+            rolloutFloatView();
         }
+    }
+
+    private void rolloutFloatView() {
+        if(mFloatViewWeb == null) return;
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mFloatViewWeb.getLayoutParams();
+        linearParams.width = width - FloatWindowManager.dp2px(this, 24);
+        linearParams.height = linearParams.width / 16 * 9;
+        mFloatViewWeb.setLayoutParams(linearParams);
+    }
+
+    private void rollupFloatView() {
+        if(mFloatViewWeb == null) return;
+
+        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mFloatViewWeb.getLayoutParams();
+        linearParams.width = FloatWindowManager.dp2px(this, 160);
+        linearParams.height = FloatWindowManager.dp2px(this, 90);
+        mFloatViewWeb.setLayoutParams(linearParams);
     }
 }
