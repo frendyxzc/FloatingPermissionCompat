@@ -58,7 +58,7 @@ public class FloatWindowManager {
 	/**
 	 * 显示悬浮窗
 	 */
-	public void show(Context context, int resId) {
+	public void show(Context context, int resId, String args) {
 		if (!isWindowDismiss) {
 			Log.e(TAG, "view is already added here");
 			return;
@@ -90,7 +90,7 @@ public class FloatWindowManager {
 		params.y = screenHeight - dp2px(context, 171);
 
 		floatView = new FloatView(context);
-		floatView.initView(resId, mListener);
+		floatView.initView(resId, mListener, args);
 		floatView.setParams(params);
 		floatView.setIsShowing(true);
 		windowManager.addView(floatView, params);

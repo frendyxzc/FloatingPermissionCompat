@@ -49,7 +49,7 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
         if(v.getId() == R.id.btn_show_or_apply) {
             // 检查是否已经授权
             if (FloatingPermissionCompat.get().check(context)) {
-                FloatWindowManager.getInstance().show(context, R.layout.float_webview);
+                FloatWindowManager.getInstance().show(context, R.layout.float_webview, null);
             } else {
                 // 授权提示
                 new AlertDialog.Builder(context).setTitle("悬浮窗权限未开启")
@@ -71,7 +71,7 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
     }
 
     @Override
-    public void onFloatViewInit(@NotNull FloatView parent) {
+    public void onFloatViewInit(@NotNull FloatView parent, String args) {
         mFloatView = parent;
         mFloatViewClose = parent.findViewById(R.id.close);
         mFloatViewWeb = parent.findViewById(R.id.webview);

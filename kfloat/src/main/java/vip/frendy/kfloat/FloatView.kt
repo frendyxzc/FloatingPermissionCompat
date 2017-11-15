@@ -59,14 +59,14 @@ class FloatView(context: Context) : FrameLayout(context) {
 
     }
 
-    fun initView(resId: Int, listener: IFloatView?) {
+    fun initView(resId: Int, listener: IFloatView?, args: String?) {
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         val view = LayoutInflater.from(context).inflate(resId, this, false)
         addView(view)
 
         mListener = listener
-        mListener?.onFloatViewInit(this)
+        mListener?.onFloatViewInit(this, args)
     }
 
     fun setParams(params: WindowManager.LayoutParams) {

@@ -7,6 +7,6 @@ import vip.frendy.kfloat.FloatView
  */
 interface IFloatView {
 
-    fun onFloatViewInit(parent: FloatView)
+    fun onFloatViewInit(parent: FloatView, args: String?)
     fun onFloatViewClick(parent: FloatView)
 }
