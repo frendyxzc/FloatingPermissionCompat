@@ -29,7 +29,7 @@ import vip.frendy.kwebviewext.KWebViewExt;
  * @modify frendy 2017/11/11
  */
 
-public class FloatWindowActivity extends Activity implements View.OnClickListener, IFloatView {
+public class FloatWindowActivity extends Activity implements View.OnClickListener, IFloatView<String> {
 
     Activity context;
     FloatView mFloatView;
@@ -73,7 +73,7 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
     }
 
     @Override
-    public void onFloatViewCreate(@NotNull FloatView parent, String args) {
+    public void onFloatViewCreate(@NotNull FloatView<String> parent, String args) {
         mFloatView = parent;
         mFloatViewClose = parent.findViewById(R.id.close);
         mFloatViewWeb = parent.findViewById(R.id.webview);

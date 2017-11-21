@@ -20,7 +20,7 @@ import vip.frendy.kfloat.interfaces.IFloatView;
  * @modify frendy 2017/11/11
  */
 
-public class FloatWindowManager {
+public class FloatWindowManager<T> {
 
 	private static final String TAG = "FloatWindowManager";
 
@@ -58,7 +58,7 @@ public class FloatWindowManager {
 	/**
 	 * 显示悬浮窗
 	 */
-	public void show(Context context, int resId, String args) {
+	public void show(Context context, int resId, T args) {
 		if (!isWindowDismiss) {
 			Log.e(TAG, "view is already added here");
 			return;

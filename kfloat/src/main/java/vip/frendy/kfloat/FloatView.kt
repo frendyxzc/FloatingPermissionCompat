@@ -15,7 +15,7 @@ import vip.frendy.kfloat.interfaces.IFloatView
 /**
  * Created by frendy on 2017/11/11.
  */
-class FloatView(context: Context) : FrameLayout(context) {
+class FloatView<T>(context: Context) : FrameLayout(context) {
     private val TAG = "KFloatView"
 
     /**
@@ -52,7 +52,7 @@ class FloatView(context: Context) : FrameLayout(context) {
     private var windowManager: WindowManager? = null
     private var mParams: WindowManager.LayoutParams? = null
 
-    private var mListener: IFloatView? = null
+    private var mListener: IFloatView<T>? = null
     private var enableAnchorToSide = false
 
     private var isMoveable = true;
@@ -61,7 +61,7 @@ class FloatView(context: Context) : FrameLayout(context) {
 
     }
 
-    fun initView(resId: Int, listener: IFloatView?, args: String?) {
+    fun initView(resId: Int, listener: IFloatView<T>?, args: T?) {
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         val view = LayoutInflater.from(context).inflate(resId, this, false)
