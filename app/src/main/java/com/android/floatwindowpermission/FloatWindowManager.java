@@ -106,6 +106,7 @@ public class FloatWindowManager {
 		}
 		isWindowDismiss = true;
 		floatView.setIsShowing(false);
+		floatView.destroy();
 		if (windowManager != null && floatView != null) {
 			windowManager.removeViewImmediate(floatView);
 		}

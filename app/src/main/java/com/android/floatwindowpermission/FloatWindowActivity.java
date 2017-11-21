@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import com.linchaolong.android.floatingpermissioncompat.FloatingPermissionCompat;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import vip.frendy.kfloat.FloatView;
 import vip.frendy.kfloat.interfaces.IFloatView;
@@ -71,7 +73,7 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
     }
 
     @Override
-    public void onFloatViewInit(@NotNull FloatView parent, String args) {
+    public void onFloatViewCreate(@NotNull FloatView parent, String args) {
         mFloatView = parent;
         mFloatViewClose = parent.findViewById(R.id.close);
         mFloatViewWeb = parent.findViewById(R.id.webview);
@@ -81,6 +83,11 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
 
         mFloatViewWeb.loadUrl("https://www.baidu.com/");
         mFloatViewWeb.setProceedTouchEvent(true);
+    }
+
+    @Override
+    public void onFloatViewDestroy(@NotNull FloatView parent) {
+        Log.i("", "** float view destroy");
     }
 
     @Override

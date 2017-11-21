@@ -66,7 +66,11 @@ class FloatView(context: Context) : FrameLayout(context) {
         addView(view)
 
         mListener = listener
-        mListener?.onFloatViewInit(this, args)
+        mListener?.onFloatViewCreate(this, args)
+    }
+
+    fun destroy() {
+        mListener?.onFloatViewDestroy(this)
     }
 
     fun setParams(params: WindowManager.LayoutParams) {
