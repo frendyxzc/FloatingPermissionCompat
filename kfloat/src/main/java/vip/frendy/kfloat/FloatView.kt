@@ -55,6 +55,8 @@ class FloatView(context: Context) : FrameLayout(context) {
     private var mListener: IFloatView? = null
     private var enableAnchorToSide = false
 
+    private var isMoveable = true;
+
     init {
 
     }
@@ -89,10 +91,14 @@ class FloatView(context: Context) : FrameLayout(context) {
         this.enableAnchorToSide = enable
     }
 
+    fun setMoveable(enable: Boolean) {
+        this.isMoveable = enable;
+    }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (isAnchoring) {
-            return true
-        }
+        if(!isMoveable) return super.onTouchEvent(event)
+        if(isAnchoring) return true
+
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 xInView = event.x

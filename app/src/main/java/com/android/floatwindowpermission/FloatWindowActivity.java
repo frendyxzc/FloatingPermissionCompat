@@ -83,6 +83,8 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
 
         mFloatViewWeb.loadUrl("https://www.baidu.com/");
         mFloatViewWeb.setProceedTouchEvent(true);
+
+        mFloatView.setMoveable(true);
     }
 
     @Override
