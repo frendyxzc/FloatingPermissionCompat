@@ -7,7 +7,7 @@ import vip.frendy.kfloat.FloatView
  */
 interface IFloatView<T> {
 
-    fun onFloatViewCreate(parent: FloatView<T>, args: T?)
+    fun onFloatViewCreate(parent: FloatView<T>, args: T?, index: Int?)
     fun onFloatViewDestroy(parent: FloatView<T>)
     fun onFloatViewClick(parent: FloatView<T>)
 }
