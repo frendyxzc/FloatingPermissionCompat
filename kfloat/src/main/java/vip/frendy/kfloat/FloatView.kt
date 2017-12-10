@@ -2,7 +2,6 @@ package vip.frendy.kfloat
 
 import android.content.Context
 import android.graphics.Point
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewConfiguration
@@ -111,16 +110,20 @@ class FloatView<T>(context: Context) : FrameLayout(context) {
             MotionEvent.ACTION_MOVE -> {
                 xInScreen = event.rawX
                 yInScreen = event.rawY
-                // 手指移动的时候更新小悬浮窗的位置
+                //手指移动的时候更新小悬浮窗的位置
                 updateViewPosition()
+                //移动中
+                mListener?.onFloatViewMoving(mParams!!.x, mParams!!.y)
             }
             MotionEvent.ACTION_UP -> {
                 if (Math.abs(xDownInScreen - xInScreen) <= ViewConfiguration.get(context).scaledTouchSlop && Math.abs(yDownInScreen - yInScreen) <= ViewConfiguration.get(context).scaledTouchSlop) {
-                    // 点击效果
+                    //点击效果
                     mListener?.onFloatViewClick(this)
                 } else {
                     //吸附效果
                     if(enableAnchorToSide) anchorToSide()
+                    //停止移动
+                    mListener?.onFloatViewStopMoving(mParams!!.x, mParams!!.y)
                 }
             }
             else -> {
@@ -163,7 +166,7 @@ class FloatView<T>(context: Context) : FrameLayout(context) {
         } else if (mParams!!.y + height + dp_25 >= screenHeight) {
             yDistance = screenHeight - dp_25 - mParams!!.y - height
         }//2
-        Log.e(TAG, "xDistance  $xDistance   yDistance$yDistance")
+        //Log.e(TAG, "xDistance  $xDistance   yDistance$yDistance")
 
         animTime = if (Math.abs(xDistance) > Math.abs(yDistance))
             (xDistance.toFloat() / screenWidth.toFloat() * 600f).toInt()
@@ -196,7 +199,7 @@ class FloatView<T>(context: Context) : FrameLayout(context) {
             val delta = interpolator.getInterpolation((System.currentTimeMillis() - currentStartTime) / animTime.toFloat())
             val xMoveDistance = (xDistance * delta).toInt()
             val yMoveDistance = (yDistance * delta).toInt()
-            Log.e(TAG, "delta:  $delta  xMoveDistance  $xMoveDistance   yMoveDistance  $yMoveDistance")
+            //Log.e(TAG, "delta:  $delta  xMoveDistance  $xMoveDistance   yMoveDistance  $yMoveDistance")
             mParams!!.x = startX + xMoveDistance
             mParams!!.y = startY + yMoveDistance
             if (!isShowing) {
@@ -211,7 +214,7 @@ class FloatView<T>(context: Context) : FrameLayout(context) {
         //增加移动误差
         mParams!!.x = (xInScreen - xInView).toInt()
         mParams!!.y = (yInScreen - yInView).toInt()
-        Log.e(TAG, "x  " + mParams!!.x + "   y  " + mParams!!.y)
+        //Log.e(TAG, "** x  " + mParams!!.x + "   y  " + mParams!!.y)
         windowManager!!.updateViewLayout(this, mParams)
     }
 }

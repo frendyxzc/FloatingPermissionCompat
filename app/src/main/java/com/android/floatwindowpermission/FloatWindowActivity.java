@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -21,6 +22,8 @@ import org.jetbrains.annotations.Nullable;
 import vip.frendy.kfloat.FloatView;
 import vip.frendy.kfloat.interfaces.IFloatView;
 import vip.frendy.kwebviewext.KWebViewExt;
+
+import static com.android.floatwindowpermission.FloatWindowManager.dp2px;
 
 /**
  * Description:
@@ -51,7 +54,7 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
         if(v.getId() == R.id.btn_show_or_apply) {
             // 检查是否已经授权
             if (FloatingPermissionCompat.get().check(context)) {
-                FloatWindowManager.getInstance().show(context, R.layout.float_webview, null);
+                FloatWindowManager.getInstance().show(context, R.layout.float_webview, null, 0);
             } else {
                 // 授权提示
                 new AlertDialog.Builder(context).setTitle("悬浮窗权限未开启")
@@ -73,7 +76,7 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
     }
 
     @Override
-    public void onFloatViewCreate(@NotNull FloatView<String> parent, String args) {
+    public void onFloatViewCreate(@NotNull FloatView<String> parent, @Nullable String args, @Nullable Integer index) {
         mFloatView = parent;
         mFloatViewClose = parent.findViewById(R.id.close);
         mFloatViewWeb = parent.findViewById(R.id.webview);
@@ -111,7 +114,7 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mFloatViewWeb.getLayoutParams();
-        linearParams.width = width - FloatWindowManager.dp2px(this, 24);
+        linearParams.width = width - dp2px(this, 24);
         linearParams.height = linearParams.width / 16 * 9;
         mFloatViewWeb.setLayoutParams(linearParams);
     }
@@ -123,8 +126,42 @@ public class FloatWindowActivity extends Activity implements View.OnClickListene
         if(mFloatViewWeb == null) return;
 
         LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mFloatViewWeb.getLayoutParams();
-        linearParams.width = FloatWindowManager.dp2px(this, 160);
-        linearParams.height = FloatWindowManager.dp2px(this, 90);
+        linearParams.width = dp2px(this, 160);
+        linearParams.height = dp2px(this, 90);
         mFloatViewWeb.setLayoutParams(linearParams);
+    }
+
+    @Override
+    public void onFloatViewMoving(int x, int y) {
+        FloatWindowManager.getInstance().showBottomBar(context, R.layout.float_bottom_bar);
+
+        WindowManager.LayoutParams bottom = FloatWindowManager.getInstance().getBottomBarParams();
+        FloatView bottombar = FloatWindowManager.getInstance().getBottomBar();
+        LinearLayout layout = bottombar.findViewById(R.id.float_bottom_bar);
+
+        FloatView floatView = FloatWindowManager.getInstance().getFloatView();
+        LinearLayout content = floatView.findViewById(R.id.float_content);
+
+        int contentHeight = dp2px(context, content.getMeasuredHeight());
+        if(y + (contentHeight * 2 / 3) >= bottom.y) {
+            layout.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        } else {
+            layout.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        }
+    }
+
+    @Override
+    public void onFloatViewStopMoving(int x, int y) {
+        WindowManager.LayoutParams bottom = FloatWindowManager.getInstance().getBottomBarParams();
+
+        FloatView floatView = FloatWindowManager.getInstance().getFloatView();
+        LinearLayout content = floatView.findViewById(R.id.float_content);
+
+        int contentHeight = dp2px(context, content.getMeasuredHeight());
+        if(y + (contentHeight * 2 / 3) >= bottom.y) {
+            FloatWindowManager.getInstance().dismiss();
+        }
+
+        FloatWindowManager.getInstance().dismissBottomBar();
     }
 }

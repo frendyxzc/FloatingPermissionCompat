@@ -31,6 +31,10 @@ public class FloatWindowManager<T> {
 	private FloatView floatView;
 	private IFloatView mListener;
 
+	private boolean isBottomBarDismiss = true;
+	private FloatView bottomBar;
+	private WindowManager.LayoutParams bottomBarParams;
+
 	public static FloatWindowManager getInstance() {
 		if (instance == null) {
 			synchronized (FloatWindowManager.class) {
@@ -96,6 +100,43 @@ public class FloatWindowManager<T> {
 		windowManager.addView(floatView, params);
 	}
 
+	public void showBottomBar(Context context, int resId) {
+		if (!isBottomBarDismiss) {
+			return;
+		}
+
+		isBottomBarDismiss = false;
+		if (windowManager == null) {
+			windowManager =
+					(WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+		}
+
+		Point size = new Point();
+		windowManager.getDefaultDisplay().getSize(size);
+		int screenWidth = size.x;
+		int screenHeight = size.y;
+
+		bottomBarParams = new WindowManager.LayoutParams();
+		bottomBarParams.packageName = context.getPackageName();
+		bottomBarParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+		bottomBarParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		bottomBarParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+				| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+				| WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
+				| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+		bottomBarParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+		bottomBarParams.format = PixelFormat.RGBA_8888;
+		bottomBarParams.gravity = Gravity.LEFT | Gravity.TOP;
+		bottomBarParams.x = screenWidth;
+		bottomBarParams.y = screenHeight;
+
+		bottomBar = new FloatView(context);
+		bottomBar.initView(resId, null, null, 0);
+		bottomBar.setParams(bottomBarParams);
+		bottomBar.setIsShowing(true);
+		windowManager.addView(bottomBar, bottomBarParams);
+	}
+
 	/**
 	 * 关闭悬浮窗
 	 */
@@ -110,6 +151,31 @@ public class FloatWindowManager<T> {
 		if (windowManager != null && floatView != null) {
 			windowManager.removeViewImmediate(floatView);
 		}
+	}
+
+	public void dismissBottomBar() {
+		if (isBottomBarDismiss) {
+			Log.e(TAG, "window can not be dismiss cause it has not been added");
+			return;
+		}
+		isBottomBarDismiss = true;
+		bottomBar.setIsShowing(false);
+		bottomBar.destroy();
+		if (windowManager != null && bottomBar != null) {
+			windowManager.removeViewImmediate(bottomBar);
+		}
+	}
+
+	public FloatView getFloatView() {
+		return floatView;
+	}
+
+	public FloatView getBottomBar() {
+		return bottomBar;
+	}
+
+	public WindowManager.LayoutParams getBottomBarParams() {
+		return bottomBarParams;
 	}
 
 	public static int dp2px(Context context, float dp) {

@@ -10,4 +10,7 @@ interface IFloatView<T> {
     fun onFloatViewCreate(parent: FloatView<T>, args: T?, index: Int?)
     fun onFloatViewDestroy(parent: FloatView<T>)
     fun onFloatViewClick(parent: FloatView<T>)
+
+    fun onFloatViewMoving(x: Int, y: Int)
+    fun onFloatViewStopMoving(x: Int, y: Int)
 }
