@@ -70,6 +70,18 @@ class FloatView<T>(context: Context) : FrameLayout(context) {
         mListener?.onFloatViewCreate(this, args, index)
     }
 
+    fun replaceView(resId: Int, listener: IFloatView<T>?, args: T?, index: Int?) {
+        windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+        removeAllViews()
+
+        val view = LayoutInflater.from(context).inflate(resId, this, false)
+        addView(view)
+
+        mListener = listener
+        mListener?.onFloatViewCreate(this, args, index)
+    }
+
     fun destroy() {
         mListener?.onFloatViewDestroy(this)
     }
