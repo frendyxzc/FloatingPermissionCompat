@@ -40,7 +40,9 @@ public class FloatingPermissionCompat {
         compat = new HuaweiCompatImpl();
       } else if (Utils.isQihoo()) {
         compat = new QihooCompatImpl();
-      }else{
+      } else if(Utils.isOppo()) {
+        compat = new OppoCompatImpl();
+      } else{
         // Android6.0以下未兼容机型默认实现
         compat = new BelowApi23CompatImpl() {
           @Override public boolean isSupported() {
@@ -55,8 +57,6 @@ public class FloatingPermissionCompat {
       // 最新发现魅族6.0的系统这种方式不好用，天杀的，只有你是奇葩，没办法，单独适配一下
       if(Utils.isMeizu()) {
         compat = new MeizuCompatImpl();
-      } else if(Utils.isOppo()) {
-        compat = new OppoCompatImpl();
       } else {
         // 6.0 版本之后由于 google 增加了对悬浮窗权限的管理，所以方式就统一了
         compat = new Api23CompatImpl();
