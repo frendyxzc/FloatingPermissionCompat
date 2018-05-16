@@ -11,6 +11,7 @@ import com.linchaolong.android.floatingpermissioncompat.impl.BelowApi23CompatImp
 import com.linchaolong.android.floatingpermissioncompat.impl.HuaweiCompatImpl;
 import com.linchaolong.android.floatingpermissioncompat.impl.MeizuCompatImpl;
 import com.linchaolong.android.floatingpermissioncompat.impl.MiuiCompatImpl;
+import com.linchaolong.android.floatingpermissioncompat.impl.OppoCompatImpl;
 import com.linchaolong.android.floatingpermissioncompat.impl.QihooCompatImpl;
 import java.lang.reflect.Method;
 
@@ -50,11 +51,13 @@ public class FloatingPermissionCompat {
           }
         };
       }
-    }else{
+    } else {
       // 最新发现魅族6.0的系统这种方式不好用，天杀的，只有你是奇葩，没办法，单独适配一下
-      if(Utils.isMeizu()){
+      if(Utils.isMeizu()) {
         compat = new MeizuCompatImpl();
-      }else{
+      } else if(Utils.isOppo()) {
+        compat = new OppoCompatImpl();
+      } else {
         // 6.0 版本之后由于 google 增加了对悬浮窗权限的管理，所以方式就统一了
         compat = new Api23CompatImpl();
       }

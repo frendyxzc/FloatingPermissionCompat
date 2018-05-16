@@ -129,6 +129,9 @@ public class Utils {
         return Build.MANUFACTURER.contains("QiKU");
     }
 
+    public static boolean isOppo() {
+        return Build.MANUFACTURER.contains("OPPO") || Build.MANUFACTURER.contains("oppo");
+    }
 
     /**
      * 判断 Intent 是否有效
