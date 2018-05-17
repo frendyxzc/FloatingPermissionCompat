@@ -17,11 +17,9 @@ public class OppoCompatImpl extends BelowApi23CompatImpl {
     @Override
     public boolean apply(Context context) {
         try {
-            Intent intent = new Intent();
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //com.coloros.safecenter/.sysfloatwindow.FloatWindowListActivity
-            ComponentName comp = new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.sysfloatwindow.FloatWindowListActivity");//悬浮窗管理页面
-            intent.setComponent(comp);
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            ComponentName componentName = new ComponentName("com.oppo.safe", "com.oppo.safe.permission.PermissionTopActivity");
+            intent.setComponent(componentName);
             context.startActivity(intent);
             return true;
         } catch(Exception e){

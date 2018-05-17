@@ -40,7 +40,7 @@ public class FloatingPermissionCompat {
         compat = new HuaweiCompatImpl();
       } else if (Utils.isQihoo()) {
         compat = new QihooCompatImpl();
-      } else if(Utils.isOppo()) {
+      } else if(Utils.isOppo() && Utils.getAndroidVersion().equals("5.1")) {
         compat = new OppoCompatImpl();
       } else{
         // Android6.0以下未兼容机型默认实现

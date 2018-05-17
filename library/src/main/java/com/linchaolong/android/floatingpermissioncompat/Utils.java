@@ -147,4 +147,8 @@ public class Utils {
         return context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
     }
 
+
+    public static String getAndroidVersion(){
+        return android.os.Build.VERSION.RELEASE;
+    }
 }
